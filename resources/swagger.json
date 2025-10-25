@@ -1,0 +1,294 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Fiel Score API",
+    "version": "1.0.0",
+    "description": "API para controle de presença do torcedor nos jogos do Corinthians."
+  },
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "summary": "Realiza o login de um usuário (torcedor ou admin)",
+        "description": "Retorna o token JWT para autenticação nas demais rotas.",
+        "tags": ["Autenticação"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string", "example": "usuario@fielscore.com" },
+                  "senha": { "type": "string", "example": "123456" }
+                },
+                "required": ["email", "senha"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Login realizado com sucesso." },
+          "401": { "description": "Credenciais inválidas." }
+        },
+        "security": []
+      }
+    },
+    "/torcedores": {
+      "post": {
+        "summary": "Cria um novo torcedor",
+        "description": "Torcedor pode criar apenas seu próprio cadastro. E-mail e número Fiel Torcedor (nr_ft) devem ser únicos.",
+        "tags": ["Torcedores"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nr_ft": { "type": "string", "example": "FT12345" },
+                  "nome": { "type": "string", "example": "João da Silva" },
+                  "email": { "type": "string", "example": "joao@fielscore.com" },
+                  "senha": { "type": "string", "example": "senha123" }
+                },
+                "required": ["nr_ft", "nome", "email", "senha"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Torcedor criado com sucesso." },
+          "400": { "description": "Dados inválidos ou duplicados." }
+        },
+        "security": []
+      },
+      "get": {
+        "summary": "Lista torcedores",
+        "tags": ["Torcedores"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Lista de torcedores" },
+          "403": { "description": "Acesso negado" }
+        }
+      }
+    },
+    "/torcedores/{nr_ft}": {
+      "get": {
+        "summary": "Busca torcedor por nr_ft",
+        "tags": ["Torcedores"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "nr_ft", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Torcedor encontrado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Torcedor" } } } },
+          "403": { "description": "Acesso negado" },
+          "404": { "description": "Torcedor não encontrado" }
+        }
+      },
+      "delete": {
+        "summary": "Deleta torcedor",
+        "tags": ["Torcedores"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "nr_ft", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "204": { "description": "Torcedor deletado" },
+          "403": { "description": "Apenas admin pode deletar torcedores" },
+          "404": { "description": "Torcedor não encontrado" }
+        }
+      }
+    },
+    "/jogos": {
+      "post": {
+        "summary": "Cria um jogo",
+        "tags": ["Jogos"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": { "type": "string", "format": "date" },
+                  "categoria": { "type": "string" },
+                  "adversario": { "type": "string" },
+                  "local": { "type": "string" },
+                  "competicao": { "type": "string" }
+                },
+                "required": ["data", "categoria", "adversario", "local", "competicao"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Jogo criado" },
+          "400": { "description": "Data do jogo não pode ser mais de 30 dias anterior à data atual ou campos obrigatórios ausentes" },
+          "403": { "description": "Apenas admin pode criar jogos" },
+          "409": { "description": "Jogo já cadastrado" }
+        }
+      },
+      "get": {
+        "summary": "Lista jogos",
+        "tags": ["Jogos"],
+        "parameters": [
+          { "name": "data", "in": "query", "schema": { "type": "string", "format": "date" } },
+          { "name": "competicao", "in": "query", "schema": { "type": "string" } },
+          { "name": "adversario", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de jogos retornada com sucesso.",
+            "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Jogo" } } } }
+          }
+        },
+        "security": []
+      }
+    },
+    "/jogos/{id}": {
+      "put": {
+        "summary": "Atualiza jogo",
+        "tags": ["Jogos"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": { "type": "string", "format": "date" },
+                  "categoria": { "type": "string" },
+                  "adversario": { "type": "string" },
+                  "local": { "type": "string" },
+                  "competicao": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Jogo atualizado", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Jogo" } } } },
+          "403": { "description": "Apenas admin pode atualizar jogos" },
+          "404": { "description": "Jogo não encontrado" },
+          "409": { "description": "Jogo já cadastrado" }
+        }
+      },
+      "delete": {
+        "summary": "Deleta jogo",
+        "tags": ["Jogos"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "204": { "description": "Jogo deletado" },
+          "403": { "description": "Apenas admin pode deletar jogos" },
+          "404": { "description": "Jogo não encontrado" }
+        }
+      }
+    },
+  "/frequencias": {
+      "post": {
+  "summary": "Registra frequência",
+  "tags": ["Frequencias"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id_jogo": { "type": "string" },
+                  "nr_ft": { "type": "string" },
+                  "tipo_ingresso": { "type": "string" },
+                  "valor_pago": { "type": "number" }
+                },
+                "required": ["id_jogo", "tipo_ingresso", "valor_pago"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Frequência registrada", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Frequencia" } } } },
+          "400": { "description": "Data do jogo não pode ser mais de 30 dias anterior à data atual" },
+          "403": { "description": "Acesso negado" },
+          "404": { "description": "Jogo não encontrado" },
+          "409": { "description": "Presença já registrada" }
+        }
+      },
+      "get": {
+  "summary": "Lista frequências e estatísticas",
+  "tags": ["Frequencias"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "torcedorId", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "includeStats", "in": "query", "schema": { "type": "boolean" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Presenças e estatísticas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "frequencias": { "type": "array", "items": { "$ref": "#/components/schemas/Frequencia" } },
+                    "total_jogos": { "type": "integer" },
+                    "pontuacao_total": { "type": "integer" },
+                    "nivel_fidelidade": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "description": "torcedorId obrigatório" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Torcedor": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "nr_ft": { "type": "string" },
+          "nome": { "type": "string" },
+          "email": { "type": "string" },
+          "role": { "type": "string" }
+        }
+      },
+      "Jogo": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "data": { "type": "string", "format": "date" },
+          "categoria": { "type": "string" },
+          "adversario": { "type": "string" },
+          "local": { "type": "string" },
+          "competicao": { "type": "string" }
+        }
+      },
+  "Frequencia": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "id_jogo": { "type": "string" },
+          "nr_ft": { "type": "string" },
+          "tipo_ingresso": { "type": "string" },
+          "valor_pago": { "type": "number" },
+          "pontuacao": { "type": "integer" }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

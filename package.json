@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+     "start":"node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,5 +17,12 @@
     "url": "https://github.com/douglascpacheco/portifolio-qa-fielscore/issues"
   },
   "homepage": "https://github.com/douglascpacheco/portifolio-qa-fielscore#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "express": "^4.18.2",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+  "swagger-ui-express": "^4.6.3",
+    "uuid": "^9.0.1"
+  }
 }
