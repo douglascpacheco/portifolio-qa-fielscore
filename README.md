@@ -1,3 +1,13 @@
+<p align="center">
+  <img src="assets/FS_Simbolo.png" alt="Logo FielScore" width="200"/>
+</p>
+
+<h1 align="center">FielScore ⚫⚪</h1>
+
+<p align="center">
+  Sistema de pontuação e fidelidade do torcedor do Corinthians 🏟️
+</p>
+
 # Fiel Score API
 
 API REST para controle de presença do torcedor nos jogos do Corinthians.
