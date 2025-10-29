@@ -5,7 +5,7 @@
 <h1 align="center">FielScore ⚫⚪</h1>
 
 <p align="center">
-  Sistema de controle de frequencia do torcedor nos jogos do Corinthians 🏟️
+  Sistema de Controle de Frequência do Torcedor nos Jogos do Corinthians 🏟️
 </p>
 
 ## Funcionalidades
