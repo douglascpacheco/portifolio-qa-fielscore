@@ -10,7 +10,7 @@
 
 # Fiel Score API
 
-API REST para controle de presença do torcedor nos jogos do Corinthians.
+API REST para controle de frequencia do torcedor nos jogos do Corinthians.
 
 ## Funcionalidades
 - Cadastro, consulta e exclusão de torcedores

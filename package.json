@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-     "start":"node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "mocha ./test/**/*.test.js --timeout=20000 --reporter mochawesome"
   },
   "repository": {
     "type": "git",
@@ -19,10 +19,16 @@
   "homepage": "https://github.com/douglascpacheco/portifolio-qa-fielscore#readme",
   "description": "",
   "dependencies": {
-    "express": "^4.18.2",
     "bcryptjs": "^2.4.3",
+    "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
-  "swagger-ui-express": "^4.6.3",
+    "mochawesome": "^7.1.4",
+    "swagger-ui-express": "^4.6.3",
     "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "chai": "^6.2.0",
+    "mocha": "^11.7.4",
+    "supertest": "^7.1.4"
   }
 }
