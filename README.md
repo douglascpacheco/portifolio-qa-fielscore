@@ -5,12 +5,8 @@
 <h1 align="center">FielScore ⚫⚪</h1>
 
 <p align="center">
-  Sistema de pontuação e fidelidade do torcedor do Corinthians 🏟️
+  Sistema de controle de frequencia do torcedor nos jogos do Corinthians 🏟️
 </p>
-
-# Fiel Score API
-
-API REST para controle de frequencia do torcedor nos jogos do Corinthians.
 
 ## Funcionalidades
 - Cadastro, consulta e exclusão de torcedores
