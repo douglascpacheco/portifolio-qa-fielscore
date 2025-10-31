@@ -8,6 +8,8 @@ function isUniqueJogo(data) {
 function createJogo(data, role) {
   if (role !== 'admin') throw { status: 403, message: 'Apenas admin pode criar jogos.' };
   if (!isUniqueJogo(data)) throw { status: 409, message: 'Jogo já cadastrado.' };
+  // Gera id curto automaticamente
+  data.id = String(db.jogos.length + 1).padStart(2, '0');
   const jogo = new Jogo(data);
   db.jogos.push(jogo);
   return jogo;

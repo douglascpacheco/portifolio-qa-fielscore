@@ -1,3 +1,4 @@
 endpoints.md
 node_modules/
 mochawesome-report/
+.env
