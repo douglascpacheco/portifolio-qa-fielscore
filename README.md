@@ -27,6 +27,63 @@
   - [mochawesome](https://github.com/mochawesome/mochawesome)
 
 ## Estrutura de Diretórios
+
+```
+portifolio-qa-fielscore/
+├── .env
+├── .git/
+├── .gitignore
+├── assets/
+│   └── FS_Simbolo.png
+├── endpoints.md
+├── fixtures/
+│   ├── postJogos.json
+│   ├── postLogin.json
+│   └── postTorcedor.json
+├── helpers/
+│   └── autenticacao.js
+├── index.js
+├── mochawesome-report/
+├── node_modules/
+├── package-lock.json
+├── package.json
+├── README.md
+├── resources/
+│   └── swagger.json
+├── src/
+│   ├── app.js
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── frequenciaController.js
+│   │   ├── jogoController.js
+│   │   ├── presencaController.js
+│   │   └── torcedorController.js
+│   ├── middleware/
+│   │   └── auth.js
+│   ├── models/
+│   │   ├── db.js
+│   │   ├── frequencia.js
+│   │   ├── jogo.js
+│   │   ├── presenca.js
+│   │   └── torcedor.js
+│   ├── routes/
+│   │   ├── authRoutes.js
+│   │   ├── frequenciaRoutes.js
+│   │   ├── jogoRoutes.js
+│   │   ├── presencaRoutes.js
+│   │   └── torcedorRoutes.js
+│   ├── server.js
+│   └── services/
+│       ├── frequenciaService.js
+│       ├── jogoService.js
+│       ├── presencaService.js
+│       └── torcedorService.js
+├── test/
+│   ├── jogos.test.js
+│   ├── login.test.js
+│   └── torcedor.test.js
+```
+
 - **src/**
   - routes/
   - controllers/
@@ -89,8 +146,6 @@ A variável `BASE_URL` define o endereço da API para os testes automatizados.
 
 ### Jogos
 - Apenas admin pode criar, atualizar ou deletar jogos.
-- Data do jogo é obrigatória.
-- Unicidade garantida pela combinação dos campos principais.
 - Qualquer usuário pode listar jogos; não precisa de token.
 
 ### Frequências (Presenças)
