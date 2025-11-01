@@ -16,13 +16,57 @@
 - Autenticação JWT
 - Documentação Swagger
 
-## Estrutura
-- **src/routes**: Rotas da API
-- **src/controllers**: Lógica dos endpoints
-- **src/services**: Regras de negócio
-- **src/models**: Modelos de dados
-- **src/middleware**: Autenticação e permissões
-- **resources**: Documentação Swagger
+## Stack Utilizada
+- **Linguagem:** JavaScript (Node.js)
+- **Principais bibliotecas:**
+  - [Mocha](https://mochajs.org/)
+  - [Supertest](https://github.com/visionmedia/supertest)
+  - [Chai](https://www.chaijs.com/)
+  - [dotenv](https://github.com/motdotla/dotenv)
+  - [swagger-ui-express](https://github.com/scottie1984/swagger-ui-express)
+  - [mochawesome](https://github.com/mochawesome/mochawesome)
+
+## Estrutura de Diretórios
+- **src/**
+  - routes/
+  - controllers/
+  - services/
+  - models/
+  - middleware/
+- **resources/**: Documentação Swagger
+- **helpers/**: Funções utilitárias para autenticação e testes
+- **test/**: Testes automatizados (Mocha/Supertest/Chai)
+- **mochawesome-report/**: Relatórios HTML dos testes
+
+## Arquivo .env
+Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
+```
+BASE_URL=http://localhost:3000
+```
+A variável `BASE_URL` define o endereço da API para os testes automatizados.
+
+## Comandos para Execução dos Testes
+- Executar todos os testes:
+  ```bash
+  npm test
+  ```
+- Executar um teste específico:
+  ```bash
+  npx mocha test/nome_do_arquivo.test.js
+  ```
+- Gerar relatório HTML com Mochawesome:
+  ```bash
+  npx mocha --reporter mochawesome
+  ```
+  O relatório será gerado no diretório `mochawesome-report`.
+
+## Documentação das Dependências
+- [Mocha](https://mochajs.org/)
+- [Supertest](https://github.com/visionmedia/supertest)
+- [Chai](https://www.chaijs.com/)
+- [dotenv](https://github.com/motdotla/dotenv)
+- [swagger-ui-express](https://github.com/scottie1984/swagger-ui-express)
+- [mochawesome](https://github.com/mochawesome/mochawesome)
 
 ## Como rodar
 1. Instale as dependências: `npm install`

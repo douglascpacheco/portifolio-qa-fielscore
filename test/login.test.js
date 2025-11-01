@@ -6,7 +6,7 @@ const { postLogin } = require('../fixtures/postLogin.json')
 
 describe('Login', () => {
     describe('POST /auth/login', () => {
-        it('Deve retornar 200 com um token em string quando usar credenciais validas', async () => {
+        it('Deve retornar 200 ao autenticar com credenciais válidas', async () => {
             const bodyLogin = { ...postLogin }
 
             const resposta = await request(process.env.BASE_URL)
@@ -18,7 +18,7 @@ describe('Login', () => {
             expect(resposta.body.token).to.be.a('string');
         })
 
-        it('Deve retornar 401 ao tentar se logar com credenciais invalidas', async () => {
+        it('Deve retornar 401 ao tentar autenticar com credenciais inválidas', async () => {
             const bodyLogin = { ...postLogin }
             bodyLogin.email = 'fiel307@fiel.com'
             bodyLogin.password = '19310'
