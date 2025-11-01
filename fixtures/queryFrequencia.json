@@ -1,0 +1,25 @@
+{
+    "comAdminId": {
+        "torcedorId": "07",
+        "includeStats": "true"
+    },
+    "comTorcedorId": {
+        "torcedorId": "01",
+        "includeStats": "true"
+    },
+    "semTorcedorId": {
+        "includeStats": "true"
+    },
+    "torcedorIdInvalido": {
+        "torcedorId": "9999",
+        "includeStats": "true"
+    },
+    "AdminSemStats": {
+        "torcedorId": "07",
+        "includeStats": "false"
+    },
+    "CampoInvalido": {
+        "torcedorId": "07",
+        "includeStats": "falsee"
+    }
+}

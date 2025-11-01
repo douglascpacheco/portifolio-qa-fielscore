@@ -3,6 +3,7 @@ const { expect } = require('chai');
 require('dotenv').config();
 const { obterToken } = require('../helpers/autenticacao')
 const postJogos = require('../fixtures/postJogos.json')
+const putJogos = require('../fixtures/putJogos.json')
 
 describe('Jogos', () => {
 
@@ -110,10 +111,7 @@ describe('Jogos', () => {
             // --- PUT ---
             describe('PUT /jogos', () => {
                 it('Deve retornar 200 ao atualizar um jogo com sucesso (perfil admin)', async () => {
-                    const bodyJogos = {
-                        local: "sorocaba",
-                        competicao: "libertadores"
-                    }
+                    const bodyJogos = { ...putJogos }
 
                     const resposta = await request(process.env.BASE_URL)
                         .put('/jogos/02')
@@ -129,10 +127,7 @@ describe('Jogos', () => {
                 })
 
                 it('Deve retornar 403 ao tentar atualizar um jogo sem permissão (perfil torcedor)', async () => {
-                    const bodyJogos = {
-                        local: "sorocaba",
-                        competicao: "libertadores"
-                    }
+                    const bodyJogos = { ...putJogos }
 
                     const resposta = await request(process.env.BASE_URL)
                         .put('/jogos/02')
@@ -146,10 +141,7 @@ describe('Jogos', () => {
                 })
 
                 it('Deve retornar 404 ao realizar busca por um jogo inexistente', async () => {
-                    const bodyJogos = {
-                        local: "sorocaba",
-                        competicao: "libertadores"
-                    }
+                    const bodyJogos = { ...putJogos }
 
                     const resposta = await request(process.env.BASE_URL)
                         .put('/jogos/0243')

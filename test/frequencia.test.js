@@ -3,6 +3,7 @@ const { expect } = require('chai');
 require('dotenv').config();
 const { obterToken } = require('../helpers/autenticacao')
 const postFrequencia = require('../fixtures/postFrequencia.json')
+const queryFrequencia = require('../fixtures/queryFrequencia.json')
 
 describe('Frequencia', () => {
 
@@ -183,15 +184,11 @@ describe('Frequencia', () => {
     describe('GET /frequencia', () => {
 
         it('Deve retornar 200 e listar todas as frequências (perfil admin)', async () => {
-            const queryParams = {
-                torcedorId: '07',
-                includeStats: 'true'
-            }
 
             const resposta = await request(process.env.BASE_URL)
                 .get('/frequencias')
                 .set('Authorization', `Bearer ${tokenAdmin}`)
-                .query(queryParams) // monta a query string automaticamente
+                .query(queryFrequencia.comAdminId) // usa o fixture
 
             expect(resposta.status).to.be.equal(200);
             expect(resposta.body).to.have.property('frequencias').that.is.an('array');
@@ -199,15 +196,10 @@ describe('Frequencia', () => {
         })
 
         it('Deve retornar 200 e listar apenas as próprias frequências (perfil torcedor)', async () => {
-            const queryParams = {
-                torcedorId: '01',
-                includeStats: 'true'
-            }
-
             const resposta = await request(process.env.BASE_URL)
                 .get('/frequencias')
                 .set('Authorization', `Bearer ${tokenTorcedor}`)
-                .query(queryParams) // monta a query string automaticamente
+                .query(queryFrequencia.comTorcedorId) // usa o fixture
 
             expect(resposta.status).to.be.equal(200);
             expect(resposta.body).to.have.property('frequencias').that.is.an('array');
@@ -215,15 +207,10 @@ describe('Frequencia', () => {
         })
 
         it('Deve retornar 200 e exibir as estatísticas de fidelidade quando includeStats=true', async () => {
-            const queryParams = {
-                torcedorId: '07',
-                includeStats: 'true'
-            }
-
             const resposta = await request(process.env.BASE_URL)
                 .get('/frequencias')
                 .set('Authorization', `Bearer ${tokenAdmin}`)
-                .query(queryParams) // monta a query string automaticamente
+                .query(queryFrequencia.comAdminId) // usa o fixture
 
             expect(resposta.status).to.be.equal(200);
             expect(resposta.body).to.have.property('frequencias').that.is.an('array');
@@ -234,15 +221,10 @@ describe('Frequencia', () => {
         })
 
         it('Deve retornar 200 e listar apenas as frequências quando includeStats=false', async () => {
-            const queryParams = {
-                torcedorId: '07',
-                includeStats: 'false'
-            }
-
             const resposta = await request(process.env.BASE_URL)
                 .get('/frequencias')
                 .set('Authorization', `Bearer ${tokenAdmin}`)
-                .query(queryParams) // monta a query string automaticamente
+                .query(queryFrequencia.AdminSemStats) // usa o fixture
 
             expect(resposta.status).to.be.equal(200);
             expect(resposta.body).to.have.property('frequencias').that.is.an('array');
@@ -255,30 +237,20 @@ describe('Frequencia', () => {
         })
 
         it('Deve retornar 400 ao enviar parâmetro includeStats inválido', async () => {
-            const queryParams = {
-                torcedorId: '07',
-                includeStats: 'trues'
-            }
-
             const resposta = await request(process.env.BASE_URL)
                 .get('/frequencias')
                 .set('Authorization', `Bearer ${tokenAdmin}`)
-                .query(queryParams) // monta a query string automaticamente
+                .query(queryFrequencia.CampoInvalido) // usa o fixture
 
             expect(resposta.status).to.be.equal(400)
 
         })
 
         it('Deve retornar 403 ao tentar visualizar frequências de outro torcedor (perfil torcedor)', async () => {
-            const queryParams = {
-                torcedorId: '07',
-                includeStats: 'true'
-            }
-
             const resposta = await request(process.env.BASE_URL)
                 .get('/frequencias')
                 .set('Authorization', `Bearer ${tokenTorcedor}`)
-                .query(queryParams) // monta a query string automaticamente
+                .query(queryFrequencia.comAdminId) // usa o fixture
 
             expect(resposta.status).to.be.equal(403)
             expect(resposta.body).to.have.property('message', 'Acesso negado.');
@@ -286,31 +258,21 @@ describe('Frequencia', () => {
         })
 
         it('Deve retornar 404 ao consultar frequências de torcedor inexistente', async () => {
-            const queryParams = {
-                torcedorId: '07354',
-                includeStats: 'true'
-            }
-
             const resposta = await request(process.env.BASE_URL)
                 .get('/frequencias')
                 .set('Authorization', `Bearer ${tokenTorcedor}`)
-                .query(queryParams) // monta a query string automaticamente
+                .query(queryFrequencia.torcedorIdInvalido) // usa o fixture
 
             expect(resposta.status).to.equal(404);
             expect(resposta.body).to.have.property('message', 'Torcedor não encontrado.');
 
         })
 
-        it.only('Deve retornar 400 ao não informar o parâmetro torcedorId', async () => {
-            const queryParams = {
-                torcedorId: '',
-                includeStats: 'true'
-            }
-
+        it('Deve retornar 400 ao não informar o parâmetro torcedorId', async () => {
             const resposta = await request(process.env.BASE_URL)
                 .get('/frequencias')
                 .set('Authorization', `Bearer ${tokenAdmin}`)
-                .query(queryParams) // monta a query string automaticamente
+                .query(queryFrequencia.semTorcedorId) // usa o fixture
 
             expect(resposta.status).to.equal(400);
             expect(resposta.body).to.have.property('message', 'torcedorId obrigatório.');

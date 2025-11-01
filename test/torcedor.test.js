@@ -2,7 +2,7 @@ const request = require('supertest');
 const { expect } = require('chai');
 require('dotenv').config();
 const { obterToken } = require('../helpers/autenticacao')
-const postTorcedor= require('../fixtures/postTorcedor.json')
+const postTorcedor = require('../fixtures/postTorcedor.json')
 
 describe('Torcedores', () => {
 
@@ -63,8 +63,9 @@ describe('Torcedores', () => {
         })
 
         it('Deve retornar 409 ao tentar criar um cadastro já existente', async () => {
-            const resposta = await request(process.env.BASE_URL)
             const bodyTorcedor = { ...postTorcedor }
+
+            const resposta = await request(process.env.BASE_URL)
                 .post('/torcedores')
                 .set('Content-Type', 'application/json')
                 .send(bodyTorcedor)
