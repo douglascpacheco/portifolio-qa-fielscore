@@ -157,6 +157,10 @@ A variável `BASE_URL` define o endereço da API para os testes automatizados.
     - Se tipo_ingresso for "inteira": soma +5 (total 15)
     - Se tipo_ingresso for "meia": mantém apenas os 10 pontos
 - Estatísticas de presença e fidelidade são acessíveis via endpoint de frequências.
+
+### Visualização de Frequências
+- No endpoint `GET /frequencias`, o perfil **admin** pode visualizar as frequências de todos os torcedores.
+- O perfil **torcedor** só pode visualizar as suas próprias frequências.
 - Categoria de fidelidade:
     - Fazendinha: até 30 pontos
     - Pacaembu: acima de 30 até 60 pontos

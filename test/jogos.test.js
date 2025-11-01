@@ -178,7 +178,7 @@ describe('Jogos', () => {
             })
 
             // --- DELETE ---
-            describe.only('DELETE /jogos', () => {
+            describe('DELETE /jogos', () => {
 
                 it('Deve retornar 204 ao excluir um jogo com sucesso (perfil admin)', async () => {
                     const resposta = await request(process.env.BASE_URL)
