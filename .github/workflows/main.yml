@@ -24,7 +24,7 @@ jobs:
           sleep 5
 
       - name: Executar os testes
-        run: npx mocha ./test/pipelines.test --reporter mochawesome --reporter-options reportDir=mochawesome-report,reportFilename=index,reportJson=true
+        run: npx mocha ./test/pipelines.test.js --reporter mochawesome --reporter-options reportDir=mochawesome-report,reportFilename=index,reportJson=true
         continue-on-error: true
 
       - name: Verificar conteúdo do relatório
