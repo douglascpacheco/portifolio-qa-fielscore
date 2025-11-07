@@ -1,37 +1,33 @@
 name: Autenticação Torcedor API Test
 
-# gatilhos
 on: 
   workflow_dispatch:
 
 jobs:
   tests:
-    
-      # [config do so]
-      runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-      # [variaveis]
-      env:
-        BASE_URL: 'http://localhost:3000'
+    env:
+      BASE_URL: 'http://localhost:3000'
 
-      # [acoes e passos]
-      steps:
+    steps:
+      - name: Checkout do Repositório
+        uses: actions/checkout@v4
 
-      # [Projetos]
-        - name: Checkout do Repositório
-          uses: actions/checkout@v4
-          
-      # [Dependências do Projeto]
-        - name: Instalando as dependências
-          run: npm install
+      - name: Instalando as dependências
+        run: npm install
 
-        - name: Iniciando o servidor de api
-          run: npm start &
-               echo "Aguardando servidor iniciar..."
-               sleep 5
+      - name: Iniciando o servidor de api
+        run: |
+          npm start &
+          echo "Aguardando servidor iniciar..."
+          sleep 5
 
-        - name: Executar os testes
-          run: npx mocha ./test/torcedor.test.js
-          
+      - name: Executar os testes
+        run: npx mocha ./test/torcedor.test.js
 
-          
+      - name: Salvar relatório Mochawesome
+        uses: actions/upload-artifact@v3
+        with:
+          name: mochawesome-report
+          path: mochawesome-report/
