@@ -6,7 +6,6 @@ const postFrequencia = require('../fixtures/postFrequencia.json')
 const queryFrequencia = require('../fixtures/queryFrequencia.json')
 
 describe('Frequencia', () => {
-
     let tokenTorcedor
     let tokenAdmin
 

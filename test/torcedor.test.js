@@ -80,7 +80,7 @@ describe('Torcedores', () => {
     // --- GET ---
     describe('GET /torcedores', () => {
 
-        it('Deve retornar 200 ao listar apenas o próprio cadastro (perfil torcedor)', async () => {
+        it('Retornar 200 apenas com dados do torcedor autenticado (perfil torcedor)', async () => {
             const resposta = await request(process.env.BASE_URL)
                 .get('/torcedores')
                 .set('Authorization', `Bearer ${tokenTorcedor}`)

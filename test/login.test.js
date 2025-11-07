@@ -26,7 +26,7 @@ describe('Login', () => {
             expect(resposta.body).to.have.property('message', 'Usuário não encontrado.')
         })
 
-        it('Deve retornar 401 ao tentar autenticar com senha invalida', async () => {
+        it('Deve retornar 401 ao tentar autenticar com credenciais inválidas', async () => {
             const resposta = await request(process.env.BASE_URL)
                 .post('/auth/login')
                 .set('Content-Type', 'application/json')
