@@ -4,8 +4,8 @@ name: Autenticação Torcedor API Test
 on: 
   workflow_dispatch:
 
-  jobs:
-    tests:
+jobs:
+  tests:
     
       # [config do so]
       runs-on: ubuntu-latest
