@@ -17,15 +17,14 @@ jobs:
       - name: Instalando as dependências
         run: npm install
 
-      - name: Iniciando o servidor de api
+      - name: Iniciando o servidor de API
         run: |
           npm start &
           echo "Aguardando servidor iniciar..."
-          sleep 5
+          sleep 5  
 
       - name: Executar os testes
         run: npx mocha test/pipeline.test.js --reporter mochawesome --reporter-options reportDir=mochawesome-report,reportFilename=index,reportJson=true
-        continue-on-error: true
 
       - name: Verificar conteúdo do relatório
         run: ls -R mochawesome-report || echo "Relatório não encontrado"
@@ -38,7 +37,7 @@ jobs:
           
       - name: Validar sucesso dos testes
         run: |
-          FAILURES=$(jq '.stats.failures' mochawesome-report/mochawesome.json)
+          FAILURES=$(jq '.stats.failures' mochawesome-report/index.json)
           if [ "$FAILURES" -gt 0 ]; then
             echo "❌ Testes falharam: $FAILURES falhas encontradas"
             exit 1
