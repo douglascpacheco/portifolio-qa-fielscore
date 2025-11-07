@@ -1,0 +1,35 @@
+name: Autenticação Torcedor API Test
+
+# gatilhos
+on: 
+  workflow_dispatch:
+
+  jobs:
+    tests:
+    
+      # [config do so]
+      runs-on: ubuntu-latest
+
+      # [variaveis]
+      env:
+        BASE_URL: 'http://localhost:3000'
+
+      # [acoes e passos]
+      steps:
+
+      # [Projetos]
+        - name: Checkout do Repositório
+          uses: actions/checkout@v4
+          
+      # [Dependências do Projeto]
+        - name: Instalando as dependências
+          run: npm install
+
+        - name: Iniciando o servidor de api
+          run: npm start &
+
+        - name: Executar os testes
+          run: npx mocha ./test/login.test.js
+          
+
+          
