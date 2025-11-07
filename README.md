@@ -2,7 +2,7 @@
   <img src="assets/FS_Simbolo.png" alt="Logo FielScore" width="200"/>
 </p>
 
-<h1 align="center">FielScore ⚫⚪</h1>
+<h1 align="center">⚽ FielScore ⚽</h1>
 
 <p align="center">
   Sistema de Controle de Frequência do Torcedor nos Jogos do Corinthians 🏟️
