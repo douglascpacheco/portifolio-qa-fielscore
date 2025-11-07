@@ -11,6 +11,8 @@ const obterToken = async (usuario, senha) => {
         .set('Content-Type', 'application/json')
         .send(bodyLogin)
 
+    console.log('Login response body:', respostaLogin.body)
+
     return respostaLogin.body.token
 }
 

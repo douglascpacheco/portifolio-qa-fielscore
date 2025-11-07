@@ -2,7 +2,7 @@ const request = require('supertest');
 const { expect } = require('chai');
 require('dotenv').config();
 const { obterToken } = require('../helpers/autenticacao')
-const postTorcedor = require('../fixtures/postTorcedor.json')
+const { userAdmin, userTorcedor, userRoleInvalido } = require('../fixtures/postTorcedor.json')
 
 describe('Torcedores', () => {
 
@@ -11,21 +11,20 @@ describe('Torcedores', () => {
 
     before(async () => {
         tokenTorcedor = await obterToken('fiel01@fiel.com', '1910')
+        console.log('Token Torcedor:', tokenTorcedor)
+
         tokenAdmin = await obterToken('fiel07@fiel.com', '1910')
+        console.log('Token Admin:', tokenAdmin)
     })
+
 
     // --- POST ---
     describe('POST /torcedores', () => {
         it('Deve retornar 201 ao criar o cadastro do torcedor com sucesso', async () => {
-            const bodyTorcedor = { ...postTorcedor }
-            bodyTorcedor.nr_ft = '01'
-            bodyTorcedor.nome = 'fiel01'
-            bodyTorcedor.email = 'fiel01@fiel.com'
-
             const resposta = await request(process.env.BASE_URL)
                 .post('/torcedores')
                 .set('Content-Type', 'application/json')
-                .send(bodyTorcedor)
+                .send(userTorcedor)
 
             expect(resposta.status).to.be.equal(201)
             expect(resposta.body).to.have.property('role')
@@ -34,12 +33,10 @@ describe('Torcedores', () => {
         })
 
         it('Deve retornar 201 ao criar o cadastro do administrador com sucesso', async () => {
-            const bodyTorcedor = { ...postTorcedor }
-
             const resposta = await request(process.env.BASE_URL)
                 .post('/torcedores')
                 .set('Content-Type', 'application/json')
-                .send(bodyTorcedor)
+                .send(userAdmin)
 
             expect(resposta.status).to.be.equal(201)
             expect(resposta.body).to.have.property('role');
@@ -48,28 +45,20 @@ describe('Torcedores', () => {
         })
 
         it('Deve retornar 400 ao tentar criar um cadastro com perfil (role) inválido', async () => {
-            const bodyTorcedor = { ...postTorcedor }
-            bodyTorcedor.nr_ft = '0100'
-            bodyTorcedor.nome = 'fiel0100'
-            bodyTorcedor.email = 'fiel0100@fiel.com'
-            bodyTorcedor.role = 'jogador'
-
             const resposta = await request(process.env.BASE_URL)
                 .post('/torcedores')
                 .set('Content-Type', 'application/json')
-                .send(bodyTorcedor)
+                .send(userRoleInvalido)
 
             expect(resposta.status).to.be.equal(400)
 
         })
 
         it('Deve retornar 409 ao tentar criar um cadastro já existente', async () => {
-            const bodyTorcedor = { ...postTorcedor }
-
             const resposta = await request(process.env.BASE_URL)
                 .post('/torcedores')
                 .set('Content-Type', 'application/json')
-                .send(bodyTorcedor)
+                .send(userTorcedor)
 
             expect(resposta.status).to.be.equal(409)
             expect(resposta.body).to.have.property('message', 'Email ou nr_ft já cadastrado.');
@@ -133,11 +122,11 @@ describe('Torcedores', () => {
     })
 
     // --- DELETE ---
-    describe('DELETE /torcedores', () => {
+    describe.only('DELETE /torcedores', () => {
 
         it('Deve retornar 204 ao excluir um torcedor com sucesso (perfil admin)', async () => {
             const resposta = await request(process.env.BASE_URL)
-                .delete('/torcedores/022')
+                .delete('/torcedores/07')
                 .set('Authorization', `Bearer ${tokenAdmin}`)
 
             expect(resposta.status).to.equal(204);

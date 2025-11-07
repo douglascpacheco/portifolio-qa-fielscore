@@ -1,6 +1,22 @@
 {
-    "nr_ft": "07",
-    "nome": "fiel07",
-    "email": "fiel07@fiel.com",
-    "senha": "1910"
+    "userAdmin": {
+        "nr_ft": "07",
+        "nome": "fiel07",
+        "email": "fiel07@fiel.com",
+        "senha": "1910",
+        "role": "admin"
+    },
+    "userTorcedor": {
+        "nr_ft": "01",
+        "nome": "fiel01",
+        "email": "fiel01@fiel.com",
+        "senha": "1910"
+    },
+    "userRoleInvalido": {
+        "nr_ft": "0143",
+        "nome": "fiel143",
+        "email": "fiel143@fiel.com",
+        "senha": "1910",
+        "role": "jogador"
+    }
 }
