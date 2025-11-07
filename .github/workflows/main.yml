@@ -1,6 +1,6 @@
 name: Autenticação Torcedor API Test
 
-on:
+on: 
   workflow_dispatch:
 
 jobs:
@@ -14,28 +14,19 @@ jobs:
       - name: Checkout do Repositório
         uses: actions/checkout@v4
 
-      - name: Instalando dependências
+      - name: Instalando as dependências
         run: npm install
 
-      - name: Iniciando servidor da API
+      - name: Iniciando o servidor de api
         run: |
           npm start &
-          echo "Aguardando API responder..."
-          
-          # tenta por até 30 segundos
-          for i in {1..30}; do
-            if curl -s http://localhost:3000 > /dev/null; then
-              echo "✅ API está no ar!"
-              break
-            fi
-            echo "⏳ Aguardando..."
-            sleep 1
-          done
+          echo "Aguardando servidor iniciar..."
+          sleep 5
 
-      - name: Executar testes com Mocha + Mochawesome
-        run: npx mocha ./test/torcedor.test.js
+      - name: Executar os testes
+        run: npm test
 
-      - name: Upload do Relatório Mochawesome
+      - name: Salvar relatório Mochawesome
         uses: actions/upload-artifact@v4
         with:
           name: mochawesome-report
