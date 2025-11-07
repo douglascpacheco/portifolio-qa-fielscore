@@ -27,6 +27,8 @@ jobs:
 
         - name: Iniciando o servidor de api
           run: npm start &
+               echo "Aguardando servidor iniciar..."
+               sleep 5
 
         - name: Executar os testes
           run: npx mocha ./test/login.test.js
