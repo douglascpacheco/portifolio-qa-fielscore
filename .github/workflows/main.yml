@@ -33,7 +33,7 @@ jobs:
           done
 
       - name: Executar testes com Mocha + Mochawesome
-        run: npm test
+        run: npx mocha ./test/torcedor.test.js
 
       - name: Upload do Relatório Mochawesome
         uses: actions/upload-artifact@v4
