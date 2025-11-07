@@ -1,5 +1,4 @@
 const request = require('supertest');
-const postLogin = require('../fixtures/postLogin.json')
 
 const obterToken = async (usuario, senha) => {
     const bodyLogin = {

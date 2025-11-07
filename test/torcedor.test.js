@@ -18,9 +18,9 @@ describe('Torcedores', () => {
     describe('POST /torcedores', () => {
         it('Deve retornar 201 ao criar o cadastro do torcedor com sucesso', async () => {
             const bodyTorcedor = { ...postTorcedor }
-            bodyTorcedor.nr_ft = '077'
-            bodyTorcedor.nome = 'fiel077'
-            bodyTorcedor.email = 'fiel077@fiel.com'
+            bodyTorcedor.nr_ft = '01'
+            bodyTorcedor.nome = 'fiel01'
+            bodyTorcedor.email = 'fiel01@fiel.com'
 
             const resposta = await request(process.env.BASE_URL)
                 .post('/torcedores')
@@ -52,6 +52,7 @@ describe('Torcedores', () => {
             bodyTorcedor.nr_ft = '0100'
             bodyTorcedor.nome = 'fiel0100'
             bodyTorcedor.email = 'fiel0100@fiel.com'
+            bodyTorcedor.role = 'jogador'
 
             const resposta = await request(process.env.BASE_URL)
                 .post('/torcedores')
@@ -101,7 +102,7 @@ describe('Torcedores', () => {
 
         it('Deve retornar 403 ao tentar acessar o cadastro de outro torcedor', async () => {
             const resposta = await request(process.env.BASE_URL)
-                .get('/torcedores/02')
+                .get('/torcedores/07')
                 .set('Authorization', `Bearer ${tokenTorcedor}`)
 
             expect(resposta.status).to.be.equal(403)

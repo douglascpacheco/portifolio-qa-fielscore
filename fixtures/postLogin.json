@@ -1,4 +1,14 @@
 {
+  "usuarioValido": {
     "email": "fiel07@fiel.com",
     "password": "1910"
+  },
+  "usuarioInvalido": {
+    "email": "fiel307@fiel.com",
+    "password": "19310"
+  },
+  "senhaInvalida": {
+    "email": "fiel07@fiel.com",
+    "password": "19310"
+  }
 }
